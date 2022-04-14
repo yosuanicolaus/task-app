@@ -1,11 +1,13 @@
 import React from "react";
+import uniqid from "uniqid";
+import Overview from "./components/Overview";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      task: { text: "" },
+      task: { text: "", id: uniqid() },
       tasks: [],
     };
   }
@@ -14,6 +16,7 @@ class App extends React.Component {
     this.setState({
       task: {
         text: e.target.value,
+        id: this.state.task.id,
       },
     });
   };
@@ -22,13 +25,8 @@ class App extends React.Component {
     e.preventDefault();
     this.setState({
       tasks: this.state.tasks.concat(this.state.task),
-      task: { text: "" },
+      task: { text: "", id: uniqid() },
     });
-  };
-
-  foo = (e) => {
-    e.preventDefault();
-    console.log("clicked, foo...");
   };
 
   render() {
@@ -46,6 +44,7 @@ class App extends React.Component {
           />
           <button type="submit">Add task</button>
         </form>
+        <Overview tasks={tasks} />
       </div>
     );
   }
